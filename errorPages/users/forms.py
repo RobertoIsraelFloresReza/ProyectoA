@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
-
+import re
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -45,7 +45,7 @@ class CustomUserCreationForm(UserCreationForm):
                      'class': 'form-control',
                      'pattern': '^[a-zA-Z0-9]+@utez\.edu\.mx$',
                      'placeholder': 'Correo electrónico',
-                     'title': 'Mete el correo electrónico institucional',
+                     'title': 'Mete el correo electrónico institucional ejemplo 20223TN078@utez.edu.mx',
                      'minlength': 5,
                      'maxlength': 50,
                      'required': True
@@ -78,15 +78,15 @@ class CustomUserCreationForm(UserCreationForm):
             ),
 
             'control_number': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Número de control',
-                    'pattern': '[a-zA-Z0-9]+',
-                    'title': 'Mete tu número de control',
-                    'minlength': 8,
-                    'maxlength': 8,
-                    'required': True
-                }
+              attrs={
+                  'class': 'form-control',
+                  'placeholder': 'Número de control',
+                  'pattern': '^\d{5}[A-Z]{2}\d{3}$',
+                  'title': 'Formato: 20223TN016 (5 dígitos, 2 letras mayúsculas, 3 dígitos)',
+                  'minlength': 10,
+                  'maxlength': 10,
+                  'required': True
+                  }
             ),
 
             'age': forms.NumberInput(
@@ -113,6 +113,7 @@ class CustomUserCreationForm(UserCreationForm):
                 }
             ),
         }
+
 
 
 class CustomUserLoginForm(AuthenticationForm):
