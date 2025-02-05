@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deudores Alimenticios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff0000;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 8px black;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #333;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        }
+        th, td {
+            border: 2px solid #ff0000;
+            padding: 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #660000;
+            color: #fff;
+            font-size: 18px;
+        }
+        td {
+            font-size: 16px;
+        }
+        .form-container {
+            margin: 20px auto;
+            width: 50%;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            width: 80%;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ff0000;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .borrar-btn {
+            background-color: #660000;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #222;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            color: white;
+            text-align: center;
+        }
+        .modal input {
+            margin: 10px;
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .modal button {
+            background-color: #ff0000;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        ¡Atención! Deudores Alimenticios
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Total Adeudado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="deudores-lista"></tbody>
+        </table>
+        <div class="form-container">
+            <h2>Agregar Nuevo Deudor</h2>
+            <input type="text" id="nombre" placeholder="Nombre">
+            <input type="number" id="monto" placeholder="Monto">
+            <button onclick="agregarDeudor()">Agregar</button>
+        </div>
+    </main>
+
+    <div id="modalConfirmarRegistro" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que deseas agregar este nuevo deudor?</p>
+            <button onclick="confirmarRegistro()">Confirmar</button>
+            <button onclick="cerrarModal('modalConfirmarRegistro')">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="modalBorrar" class="modal">
+        <div class="modal-content">
+            <p>Ingresa la contraseña para borrar el deudor:</p>
+            <input type="password" id="password" placeholder="Contraseña">
+            <button onclick="verificarContraseña()">Aceptar</button>
+            <button onclick="cerrarModal('modalBorrar')">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", cargarDeudores);
+
+        function agregarDeudor() {
+            var nombre = document.getElementById("nombre").value.trim();
+            var monto = document.getElementById("monto").value.trim();
+            if (!nombre || !monto) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            var deudores = JSON.parse(localStorage.getItem("deudores")) || [];
+            var existe = deudores.some(deudor => deudor.nombre.toLowerCase() === nombre.toLowerCase());
+
+            if (existe) {
+                alert("Este deudor ya está registrado.");
+                return;
+            }
+
+            document.getElementById("modalConfirmarRegistro").style.display = "block";
+        }
+
+        function confirmarRegistro() {
+            var nombre = document.getElementById("nombre").value.trim();
+            var monto = document.getElementById("monto").value.trim();
+            var deudores = JSON.parse(localStorage.getItem("deudores")) || [];
+            
+            deudores.push({ nombre, monto });
+            localStorage.setItem("deudores", JSON.stringify(deudores));
+
+            document.getElementById("nombre").value = ''; 
+            document.getElementById("monto").value = ''; 
+
+            actualizarTabla();
+            cerrarModal('modalConfirmarRegistro');
+        }
+
+        function cargarDeudores() {
+            actualizarTabla();
+        }
+
+        function actualizarTabla() {
+            var tabla = document.getElementById("deudores-lista");
+            tabla.innerHTML = "";
+            var deudores = JSON.parse(localStorage.getItem("deudores")) || [];
+
+            deudores.forEach(deudor => {
+                var nuevaFila = document.createElement("tr");
+                nuevaFila.innerHTML = `
+                    <td>${deudor.nombre}</td>
+                    <td style="color: #ff0000; font-weight: bold; font-size: 20px;">$${deudor.monto}</td>
+                    <td><button class="borrar-btn" onclick="abrirModalBorrar('${deudor.nombre}')">Borrar</button></td>
+                `;
+                tabla.appendChild(nuevaFila);
+            });
+        }
+
+        function abrirModalBorrar(nombre) {
+            document.getElementById("modalBorrar").setAttribute('data-deudor', nombre);
+            document.getElementById("password").value = ''; 
+            document.getElementById("modalBorrar").style.display = "block";
+        }
+
+        function verificarContraseña() {
+            var password = document.getElementById("password").value;
+            if (password === "2210") {
+                var nombre = document.getElementById("modalBorrar").getAttribute('data-deudor');
+                borrarDeudor(nombre);
+                cerrarModal('modalBorrar');
+            } else {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
+        function borrarDeudor(nombre) {
+            var deudores = JSON.parse(localStorage.getItem("deudores")) || [];
+            deudores = deudores.filter(deudor => deudor.nombre !== nombre);
+            localStorage.setItem("deudores", JSON.stringify(deudores));
+            actualizarTabla();
+        }
+
+        function cerrarModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+    </script>
+</body>
+</html>

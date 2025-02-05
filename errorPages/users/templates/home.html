@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tienda Neon Infernal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #052890;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            background-image: url('https://source.unsplash.com/1600x900/?fire,flames');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+
+        /* Fuego en movimiento */
+        .fire-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .container {
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+            border: 2px solid #ff4500;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            color: #ff4500;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(255, 69, 0, 1), 0 0 30px rgba(255, 69, 0, 1), 0 0 50px rgba(255, 69, 0, 0.8);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #c8c8c8;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 69, 0, 0.8);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #052890;
+            background: #ff4500;
+            border: none;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: 0.4s;
+            margin: 15px;
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.8);
+        }
+
+        .btn:hover {
+            background: #ff6347;
+            color: #ffffff;
+            box-shadow: 0 0 30px rgba(255, 69, 0, 1);
+        }
+
+        .logout-btn {
+            background: #cc3700;
+            box-shadow: 0 0 15px rgba(204, 55, 0, 0.8);
+        }
+
+        .logout-btn:hover {
+            background: #ff4500;
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(255, 69, 0, 1);
+        }
+
+        .cta-text {
+            font-size: 1.1rem;
+            color: #ff4500;
+            text-shadow: 0 0 8px rgba(255, 69, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fuego de fondo -->
+    <img src="https://i.pinimg.com/originals/48/b7/8d/48b78d197a1480ea7fdf0eddcabc88c1.gif" class="fire-background" alt="Fuego infernal">
+
+    <div class="container">
+        <h1>Bienvenido al Infierno, Locochón</h1>
+        <p>Explora nuestra tienda infernal y descubre lo mejor en tecnología, ¡con el poder del fuego!</p>
+        <a href="https://www.utez.edu.mx:8443/SISAVA/" class="btn">Entrar a la tienda</a>
+        <p class="cta-text">¡Hazlo rápido, las llamas no esperan!</p>
+    </div>
+
+    <a href="http://127.0.0.1:8000/users/logout/" class="btn logout-btn">Cerrar Sesión</a>
+
+</body>
+</html>

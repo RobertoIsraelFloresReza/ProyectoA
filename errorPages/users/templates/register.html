@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Registro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    {% include 'mensaje.html' %}
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2>Registro</h2>
+        <form method="post" onsubmit="return validateForm()">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function validateForm() {
+            let password1 = document.getElementById("id_password1").value;
+            let password2 = document.getElementById("id_password2").value;
+
+            if (password1.length < 8) {
+                alert("La contraseña debe tener al menos 8 caracteres.");
+                return false;
+            }
+
+            if (password1 !== password2) {
+                alert("Las contraseñas no coinciden.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6 mt-5">
+                    <h1>Bienvenido a mi onepage</h1>
+                    <br>
+                    <p>Este sitio carga tarjetas de bootstrap dinamicamente</p>
+                    <br>
+                </div>
+                <div class="col-6 mt-5">
+                    <img class="fluid" alt="img"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROOtv3TRF9fW_TYao8EtoYiPyBK3u7upYuMg&s">
+
+                </div>
+            </div>
+            <div class="row mt-5" id="tarjetas">
+                <div class="card col-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Este es un titulo estatico
+                        </h5>
+                        <p class="card-text">
+                            Este es un texto estatico dentro de la tarjeta
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, id. Laudantium quis
+                            ducimus aliquam voluptates, omnis dolorum maiores, sint at, quisquam earum reiciendis enim
+                            corporis rerum deleniti quam? Adipisci, qui.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function loadCards(title, text) {
+                    var card = document.createElement('div');
+                    card.setAttribute('class', 'card col-4');
+
+                    var body = document.createElement('div');
+                    body.setAttribute('class', 'card-body');
+
+                    var h5 = document.createElement('h5');
+                    h5.setAttribute('class', 'card-title');
+                    h5.innerHTML = title;
+
+                    var p = document.createElement('p');
+                    p.setAttribute('class', 'card-text');
+                    p.innerHTML = text;
+
+                    body.appendChild(h5);
+                    body.appendChild(p);
+                    card.appendChild(body);
+
+                    document.getElementById('tarjetas').appendChild(card);
+                }
+
+                var i = 1;
+                window.addEventListener('scroll', () => {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+
+                        for (let index = 0; index < 5; index++) {
+                            if (i > 100) {
+                                break;
+                            }
+                            var object = {
+                                title: 'Título dinámico de Card' + i,
+                                text: 'Texto dinámico de Card' + i
+                            }
+                            loadCards(object.title, object.text);
+                            i++;
+                        }
+                    }
+                });
+            </script>
+
+</body>
+
+</html>

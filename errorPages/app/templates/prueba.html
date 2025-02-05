@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+
+    <form>
+        <input type="text" name="nombre" placeholder="ingrese nombre">
+        <input type="number" name="edad" placeholder="ingrese edad">
+        <button type="submit">Enviar...</button>
+    </form>
+    
+    {% if objeto %}
+
+    <!-- Todo lo que este aqui se va pintar -->
+     <h1>{{saludo}}</h1>
+     <h2>{{ objeto.nombre }}</h2>
+     <p>{{objeto.descripcion}}</p>
+
+    {% endif%}
+
+
+    {% if personas %}
+        <ul>
+        {% for persona in personas %}
+            <li>{{ persona.nombre }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+</body>
+</html>
