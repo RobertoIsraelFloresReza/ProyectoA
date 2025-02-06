@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 import json
+from .message import message as Message
 
 def register_view(request):
     if request.method == "POST":
@@ -31,14 +32,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
 
-    message = {
-        "type": "info",
-        "text": "Se ha cerrado sesión correctamente.",
-        "status": 200,
-        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8MIbugIhZBykSmQcR0QPcfnPUBOZQ6bm35w&s"
-    }
-
-    return render(request, "login.html", {"message": json.dumps(message)})
+    message = Message("info", "Se ha cerrado sesión correctamente.", 200, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8MIbugIhZBykSmQcR0QPcfnPUBOZQ6bm35w&s")
+    
+    return render(request, "login.html", {"message": json.dumps(message.to_dict())})
 
 
 

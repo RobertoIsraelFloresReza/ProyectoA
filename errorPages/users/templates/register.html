@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
     {% include 'mensaje.html' %}
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -30,13 +33,45 @@
             let password1 = document.getElementById("id_password1").value;
             let password2 = document.getElementById("id_password2").value;
 
+            // Validación de la longitud de la contraseña
             if (password1.length < 8) {
-                alert("La contraseña debe tener al menos 8 caracteres.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'La contraseña debe tener al menos 8 caracteres.',
+                });
                 return false;
             }
 
+            // Validación de que la contraseña contiene al menos un número
+            let numberPattern = /\d/;
+            if (!numberPattern.test(password1)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'La contraseña debe contener al menos un número.',
+                });
+                return false;
+            }
+
+            // Validación de que la contraseña contiene al menos un símbolo
+            let symbolPattern = /[!#$%&?]/;
+            if (!symbolPattern.test(password1)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'La contraseña debe contener al menos un símbolo (!, #, $, %, & o ?).',
+                });
+                return false;
+            }
+
+            // Validación de que las contraseñas coinciden
             if (password1 !== password2) {
-                alert("Las contraseñas no coinciden.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Las contraseñas no coinciden.',
+                });
                 return false;
             }
 
@@ -44,5 +79,24 @@
         }
     </script>
 
+    <Modal>
+        <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modalMessage"></p>
+                        <img id="modalImage" class="img-fluid" style="display: none;" alt="Imagen del mensaje">
+                     </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </Modal>
 </body>
 </html>

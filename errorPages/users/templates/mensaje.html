@@ -37,7 +37,7 @@
             const message = {{ message| safe }}; // El mensaje se pasa desde Django
            
             if (message) {
-                document.getElementById("modalMessage").innerText =`[${message.typr.toUpperCase()}] Código ${message.code}: ${message.message}`;
+                document.getElementById("modalMessage").innerText =`[${message.type.toUpperCase()}] Código ${message.code}: ${message.message}`;
             
                 if (message.img) {
                     const imgElement = document.getElementById("modalImage");
