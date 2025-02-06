@@ -15,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
                 'placeholder': 'Contraseña',
                 'pattern': '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
                 'title': 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.',
-                'minlength': 6,
+                'minlength': 8,
                 'maxlength': 50,
                 'required': True
             }
@@ -28,7 +28,7 @@ class CustomUserCreationForm(UserCreationForm):
                 'class': 'form-control',
                 'placeholder': 'Confirma tu contraseña',
                 'title': 'Repite la contraseña',
-                'minlength': 6,
+                'minlength': 8,
                 'maxlength': 50,
                 'required': True
             }
