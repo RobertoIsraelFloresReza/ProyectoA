@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Categoria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-lg p-4 rounded" style="max-width: 400px; width: 100%;">
+            <h2 class="text-center mb-4">Nueva Categoria</h2>
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="{{ form.nombre.id_for_label }}" class="form-label">{{ form.nombre.label }}</label>
+                    {{ form.nombre }}
+                    <small class="text-danger">{{ form.nombre.errors }}</small>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="{{ form.descripcion.id_for_label }}" class="form-label">{{ form.descripcion.label }}</label>
+                    {{ form.descripcion }}
+                    <small class="text-danger">{{ form.descripcion.errors }}</small>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="{{ form.imagen.id_for_label }}" class="form-label">{{ form.imagen.label }}</label>
+                    {{ form.imagen }}
+                    <small class="text-danger">{{ form.imagen.errors }}</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Registrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de categorias</h1>
+        <div id="categorias" class="mt-4"></div>
+    </div>
+
+    <script>
+        function cargarCategorias() {
+            fetch('/categorias/api/get/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let div = document.getElementById('categorias');
+                    div.innerHTML = ''; // limpiar antes de agregar nuevas categorias
+
+                    data.forEach(categoria => {
+                        div.innerHTML += `
+                            <div class="card mb-3 p-3 shadow-sm">
+                                <p><strong>Nombre:</strong> ${categoria.nombre}</p>
+                                <p><strong>Descripcion:</strong> ${categoria.descripcion}</p>   
+                                <img src="${categoria.imagen}" width="100px" class="img-fluid rounded"/>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Llamar a la función al cargar la página
+        document.addEventListener("DOMContentLoaded", cargarCategorias);
+
+    </script>
+</body>
+
+</html>
