@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'productos',
     'categorias',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'errorPages.urls'
@@ -93,6 +95,8 @@ DATABASES = {
     }
 }
 
+# Permitir todas las solicitudes de cualquier origen (para desarrollo)
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
